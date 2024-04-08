@@ -8,7 +8,7 @@
        </div>
        <div class="user-info">
          <div class="greeting">Bienvenid@</div>
-         <div class="username">ConfiguroWeb</div>
+         <div class="username">Usuario FC BCB</div>
 
        </div>
      </div>
@@ -17,7 +17,7 @@
      <p class="menu-title">Opciones <span class="pull-right"><a href="#" onclick="location.reload()"><i class="fa fa-refresh"></i></a></span></p>
 
      <ul>
-       <li class="start"> <a href="home.php"> <i class="icon-custom-home"></i> <span class="title">Dashboard</span> </a>
+       <li class="start"> <a href="home.php"> <i class="icon-custom-home"></i> <span class="title">Panel de Control</span> </a>
        </li>
        <li><a href="manage-tickets.php"><span class="fa fa-ticket"></span> Gestionar Ticket</a></li>
        <li><a href="manage-quotes.php"> <span class="fa fa-tasks"></span> Gestionar Servicios</a></li>

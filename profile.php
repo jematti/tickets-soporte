@@ -122,8 +122,6 @@ if (isset($_POST['update'])) {
                                                     <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
                                                     <input type="text" name="phone" value="<?php echo $row['mobile']; ?>" maxlength="10" class="form-control" />
                                                 </div>
-
-
                                             </div>
                                         </div>
 
@@ -139,27 +137,15 @@ if (isset($_POST['update'])) {
                                                     </select>
                                                     </select>
                                                 </div>
-
                                             </div>
                                         </div>
-
-
-
 
                                         <div class="form-group">
                                             <label class="col-md-3 col-xs-12 control-label">Dirección</label>
                                             <div class="col-md-6 col-xs-12">
                                                 <textarea class="form-control" name="address" rows="5"><?php echo $row['address']; ?></textarea>
-
                                             </div>
                                         </div>
-
-
-
-
-
-
-
                                     </div>
                                 <?php } ?>
                                 <div class="panel-footer">
@@ -168,11 +154,8 @@ if (isset($_POST['update'])) {
                                 </div>
                                 </div>
                             </form>
-
                         </div>
                     </div>
-
-
             </div>
         </div>
     </div>
