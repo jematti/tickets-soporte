@@ -7,13 +7,13 @@ if (isset($_POST['submit'])) {
   $row2 = mysqli_fetch_array($row1);
   if ($row2 > 0) {
     $email = $row2['email'];
-    $subject = " CRM about your password";
+    $subject = "Información de tu Contraseña";
     $password = $row2['password'];
-    $message = "Your password is " . $password;
+    $message = "tu contraseña es " . $password;
     mail($email, $subject, $message, "From: $email");
-    $_SESSION['msg'] = "Your Password has been sent to your email id Successfully.";
+    $_SESSION['msg'] = "Su contraseña ha sido enviada a su correo electrónico con éxito.";
   } else {
-    $_SESSION['msg'] = "*Email not register with us.";
+    $_SESSION['msg'] = "*Correo Electronico no registrado.";
   }
 }
 ?>
@@ -23,7 +23,7 @@ if (isset($_POST['submit'])) {
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <meta charset="utf-8" />
-  <title>CWEB Login</title>
+  <title>ACCEDE AL SGT</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta content="" name="description" />
   <meta content="" name="author" />
@@ -42,9 +42,9 @@ if (isset($_POST['submit'])) {
   <div class="container">
     <div class="row login-container column-seperation">
       <div class="col-md-5 col-md-offset-1">
-        <h2>Forgot Password </h2>
+        <h2>Olvido su contraseña </h2>
         <p>
-          <a href="registration.php">Sign up Now!</a> for a webarch account,It's free and always will be..
+          <a href="registration.php">¡Regístrese ahora!</a> 
         </p>
         <br>
 
@@ -55,7 +55,7 @@ if (isset($_POST['submit'])) {
         <form id="login-form" class="login-form" action="" method="post">
           <div class="row">
             <div class="form-group col-md-10">
-              <label class="form-label">Username / Email</label>
+              <label class="form-label">Correo FCBCB</label>
               <div class="controls">
                 <div class="input-with-icon  right">
                   <i class=""></i>
@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
 
           <div class="row">
             <div class="col-md-10">
-              <button class="btn btn-primary btn-cons pull-right" name="submit" type="submit">submit</button>
+              <button class="btn btn-primary btn-cons pull-right" name="submit" type="submit">enviar</button>
             </div>
           </div>
         </form>

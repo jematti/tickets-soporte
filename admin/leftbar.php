@@ -3,8 +3,8 @@
    <!-- BEGIN MINI-PROFILE -->
    <div class="page-sidebar-wrapper scrollbar-dynamic" id="main-menu-wrapper">
      <div class="user-info-wrapper">
-       <div class="profile-wrapper" style="border:solid #fff 1px;">
-         <img src="../assets/img/admin.jpg" alt="" data-src="../assets/img/admin.jpg" data-src-retina="../assets/img/admin.jpg" class="side-user-img" />
+       <div class="profile-wrapper" >
+         <img src="../assets/img/admin3.jpeg" alt="" data-src="../assets/img/admin3.jpeg" data-src-retina="../assets/img/admin3.jpeg" class="side-user-img" />
        </div>
        <div class="user-info">
          <div class="greeting">Bienvenid@</div>

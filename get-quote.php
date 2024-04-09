@@ -134,7 +134,7 @@ if (isset($_POST['submit'])) {
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="col-md-3 text-left text-left control-label">Empresa</label>
+                                                <label class="col-md-3 text-left text-left control-label">Área</label>
                                                 <div class="col-md-9">
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
