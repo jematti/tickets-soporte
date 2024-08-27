@@ -2,6 +2,7 @@
 session_start();
 include("dbconnection.php");
 include("checklogin.php");
+date_default_timezone_set('America/La_Paz');
 check_login();
 error_reporting(0);
 if (isset($_POST['submit'])) {
@@ -25,7 +26,7 @@ if (isset($_POST['submit'])) {
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta charset="utf-8" />
-    <title>CWEB Request Quote</title>
+    <title>SGT-FCBCB</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta content="" name="description" />
     <meta content="" name="author" />
@@ -50,150 +51,123 @@ if (isset($_POST['submit'])) {
     </div>
     </div>
     <!-- END SIDEBAR -->
+
     <!-- BEGIN PAGE CONTAINER-->
-    <div class="page-content">
-        <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
-        <div id="portlet-config" class="modal hide">
-            <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"></button>
-                <h3>Widget Settings</h3>
-            </div>
-            <div class="modal-body"> Widget settings form goes here </div>
+<!-- BEGIN PAGE CONTAINER-->
+<div class="page-content">
+    <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+    <div id="portlet-config" class="modal hide">
+        <div class="modal-header">
+            <button data-dismiss="modal" class="close" type="button"></button>
+            <h3>Configuración de Widget</h3>
         </div>
-        <div class="clearfix"></div>
-        <div class="content">
-            <div class="page-title">
-                <h3>Formulario de Servicio</h3>
-                <div class="row">
-                    <div class="col-md-12">
-
-                        <form class="form-horizontal" method="post" enctype="multipart/form-data">
-                            <div class="panel panel-default">
-
-                                <div class="panel-body">
-                                    <p>Por favor haga clic abajo para mencionar los servicios de su interés para recibir una cotización de los mismos:</p>
-                                </div>
-                                <div class="panel-body bg-white">
-
-                                    <div class="row">
-
-                                        <div class="col-md-6">
-                                            <?php
-                                            $uid = $_SESSION['id'];
-                                            $query = mysqli_query($con, "select email,name,mobile from user where id='$uid'");
-                                            while ($rw = mysqli_fetch_array($query)) {
-                                            ?>
-
-                                                <div class="form-group">
-                                                    <label class="col-md-3 text-left text-left control-label">Nombre </label>
-                                                    <div class="col-md-9">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                                            <input type="text" name="name" class="form-control" value="<?php echo $rw['name']; ?>" readonly="true" />
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="col-md-3 text-left text-left control-label">#</label>
-                                                    <div class="col-md-9 col-xs-12">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                                            <input type="text" name="contact" class="form-control" value="<?php echo $rw['mobile']; ?>" readonly="true" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-
-                                                <div class="form-group">
-                                                    <label class="col-md-3 text-left text-left control-label">Servicio Solicitado :</label>
-                                                    <div class="col-md-9">
-                                                        <div class="form-group">
-                                                            <label class="check">
-                                                                <input type="checkbox" class="icheckbox" name="services[]" value="Recuperación de Información"> Recuperación de Información</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-
+        <div class="modal-body"> Formulario de configuración del widget </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="content">
+        <div class="page-title">
+            <h3>Formulario de Servicio</h3>
+            <div class="row">
+                <div class="col-md-12">
+                    <form class="form-horizontal" method="post" enctype="multipart/form-data">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <p>Por favor seleccione los servicios de su interés para recibir una cotización:</p>
+                            </div>
+                            <div class="panel-body bg-white">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <?php
+                                        $uid = $_SESSION['id'];
+                                        $query = mysqli_query($con, "SELECT email, name, mobile FROM user WHERE id='$uid'");
+                                        while ($rw = mysqli_fetch_array($query)) {
+                                        ?>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Nombre </label>
+                                            <div class="col-md-9">
+                                                <input type="text" name="name" class="form-control" value="<?php echo $rw['name']; ?>" readonly="true">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Contacto</label>
+                                            <div class="col-md-9">
+                                                <input type="text" name="contact" class="form-control" value="<?php echo $rw['mobile']; ?>" readonly="true">
+                                            </div>
+                                        </div>
                                         </div>
                                         <div class="col-md-6">
-
                                             <div class="form-group">
-                                                <label class="col-md-3 text-left text-left control-label">Email</label>
+                                                <label class="col-md-3 control-label">Email</label>
                                                 <div class="col-md-9">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                                        <input type="email" name="email" class="form-control" value="<?php echo $rw['email']; ?>" readonly="true">
-                                                    </div>
-
+                                                    <input type="email" name="email" class="form-control" value="<?php echo $rw['email']; ?>" readonly="true">
                                                 </div>
                                             </div>
-
                                             <div class="form-group">
-                                                <label class="col-md-3 text-left text-left control-label">Área</label>
+                                                <label class="col-md-3 control-label">Área</label>
                                                 <div class="col-md-9">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                                        <input type="text" name="company" class="form-control datepicker" value="" required>
-                                                    </div>
-
+                                                    <input type="text" name="company" class="form-control" value="" required>
                                                 </div>
                                             </div>
-
-
-                                            <div class="form-group">
-                                                <div class="col-md-9">
-                                                    <div class="form-group">
-                                                        <label class="check">
-                                                            <input type="checkbox" class="icheckbox" name="services[]" value=" Formateo de Dispositivo"> Formateo de Dispositivo</label>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label class="col-md-1 text-left text-left control-label">Mensaje</label>
-                                                <div class="col-md-11 col-xs-12">
+                                                <label class="col-md-2 control-label">Servicios Solicitados</label>
+                                                <div class="col-md-10">
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input type="checkbox" name="services[]" value="Apoyo Informatico para Eventos"> Apoyo Informatico para Eventos
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input type="checkbox" name="services[]" value="Mantenimiento Preventivo de Equipos"> Mantenimiento Preventivo de Equipos
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input type="checkbox" name="services[]" value="Consultoría en Optimización de Infraestructura Tecnológica"> Consultoría en Optimización de Infraestructura Tecnológica
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input type="checkbox" name="services[]" value="Configuración e Instalaciónes de Red"> Configuración e Instalaciónes de Red
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input type="checkbox" name="services[]" value="Otros"> Otros
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-2 control-label">Mensaje</label>
+                                                <div class="col-md-10">
                                                     <textarea class="form-control" rows="5" name="query" required></textarea>
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <?php } ?>
                                     </div>
-                                <?php } ?>
                                 </div>
                                 <div class="panel-footer">
                                     <button class="btn btn-default">Resetear Campos</button>
-                                    <input value="Enviar" type="submit" name="submit" class="btn btn-primary pull-right">
+                                    <input type="submit" name="submit" class="btn btn-primary pull-right" value="Enviar">
                                 </div>
                             </div>
-                        </form>
-
-                    </div>
+                        </div>
+                    </form>
                 </div>
-
-
-
-
-
-
-
-
-
-
-
             </div>
         </div>
     </div>
+</div>
+
+
     <!-- BEGIN CHAT -->
 
     </div>
+
     <script src="assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
     <script src="assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
     <script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
@@ -206,7 +180,17 @@ if (isset($_POST['submit'])) {
     <script src="assets/js/core.js" type="text/javascript"></script>
     <script src="assets/js/chat.js" type="text/javascript"></script>
     <script src="assets/js/demo.js" type="text/javascript"></script>
-
+<!-- <script>
+$(document).ready(function() {
+    $('form').submit(function(event) {
+        // Verificar si al menos un checkbox está seleccionado
+        if ($('input[name="services[]"]:checked').length === 0) {
+            alert('Por favor seleccione al menos un servicio.');
+            event.preventDefault(); // Evitar que el formulario se envíe
+        }
+    });
+});
+</script> -->
 </body>
 
 </html>

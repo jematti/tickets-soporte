@@ -34,9 +34,9 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" href="registration.php">Regístrate</a>
-          </li>
+          </li> -->
           <li class="nav-item">
             <a class="nav-link" href="login.php">Acceder</a>
           </li>
@@ -54,7 +54,7 @@
       <div class="container">
         <h1 class="masthead-heading mb-0">Sistema de Generación de Tickets</h1>
         <h2 class="masthead-subheading mb-0">FC BCB</h2>
-        <a href="registration.php" class="btn btn-primary btn-xl rounded-pill mt-5">Registro de Usuario</a>
+        <a href="login.php" class="btn btn-primary btn-xl rounded-pill mt-5">INGRESAR</a>
       </div>
     </div>
   </header>

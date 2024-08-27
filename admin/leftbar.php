@@ -20,8 +20,10 @@
        <li class="start"> <a href="home.php"> <i class="icon-custom-home"></i> <span class="title">Panel de Control</span> </a>
        </li>
        <li><a href="manage-tickets.php"><span class="fa fa-ticket"></span> Gestionar Ticket</a></li>
-       <li><a href="manage-quotes.php"> <span class="fa fa-tasks"></span> Gestionar Servicios</a></li>
+       <!-- <li><a href="manage-quotes.php"> <span class="fa fa-tasks"></span> Gestionar Servicios</a></li> -->
+       <li><a href="generate-report-main.php"><span class="fa fa-file-text-o"></span> Reportes</a></li>
        <li><a href="user-access-log.php"><span class="fa fa-users"></span>&nbsp;&nbsp;Registro de Acceso de Usuarios</a></li>
        <li><a href="manage-users.php"><span class="fa fa-users"></span> Usuarios</a></li>
        <li><a href="change-password.php"><span class="fa fa-file-text-o"></span> Cambiar Contraseña</a></li>
+       
      </ul>

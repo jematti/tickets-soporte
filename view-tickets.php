@@ -62,19 +62,41 @@ check_login();
 
       <h4> <span class="semi-bold">Tickets</span></h4>
       <br>
-      <?php $rt = mysqli_query($con, "select * from ticket where email_id='" . $_SESSION['login'] . "'");
-      $num = mysqli_num_rows($rt);
-      if ($num > 0) {
-
+      <?php 
+        $rt = mysqli_query($con, "SELECT ticket.*, admin.name AS admin_name FROM ticket LEFT JOIN admin ON ticket.admin_id = admin.id WHERE ticket.user_id='" . $_SESSION['id'] . "' ORDER BY ticket.posting_date DESC");
+        $num = mysqli_num_rows($rt);
+        if ($num > 0) {
         while ($row = mysqli_fetch_array($rt)) {
-      ?>
+        ?>
           <div class="row">
             <div class="col-md-12">
               <div class="grid simple no-border">
                 <div class="grid-title no-border descriptive clickable">
                   <h4 class="semi-bold"><?php echo $row['subject']; ?></h4>
-                  <p><span class="text-success bold">Ticket #<?php echo $row['ticket_id']; ?></span> - Fecha de Creación <?php echo $row['posting_date']; ?>
-                    <span class="label label-important"><?php echo $row['status']; ?></span>
+                  <p><span class="text-success bold">Ticket #<?php echo $row['id']; ?></span> - Fecha de Creación <?php echo $row['posting_date']; ?>
+                      <?php
+                          // Obtener el valor de $row['status']
+                          $status = $row['status'];
+                        
+                          // Definir los colores según el estado
+                          $color = '';
+                          switch ($status) {
+                            case 'Open':
+                                $color = 'green'; // Cambia esto al color que desees
+                                break;
+                            case 'closed':
+                                $color = 'red'; // Cambia esto al color que desees
+                                break;
+                            case 'rechazado':
+                                $color = 'red'; // Cambia esto al color que desees
+                                break;
+                            default:
+                                // Si no coincide con ninguno, se usa un color predeterminado
+                                $color = 'black'; // Cambia esto al color que desees
+                                break;
+                           }
+                      ?>
+                      <span class="label label-important" style="background-color: <?php echo $color; ?>"><?php echo $status; ?></span>
                   </p>
                   <div class="actions"> <a class="view" href="javascript:;"><i class="fa fa-angle-down"></i></a> </div>
                 </div>
@@ -95,14 +117,15 @@ check_login();
                     <div class="form-actions">
                       <div class="post col-md-12">
                         <div class="user-profile-pic-wrapper">
-                          <div class="user-profile-pic-normal"> <img width="35" height="35" data-src-retina="assets/img/admin.jpg" data-src="assets/img/admin.jpg" src="assets/img/admin.jpg" alt="Admin"> </div>
+                          <div class="user-profile-pic-normal"> <img width="35" height="35" data-src-retina="assets/img/admin3.jpeg" data-src="assets/img/admin3.jpeg" src="assets/img/admin3.jpeg" alt="Admin"> </div>
                         </div>
                         <div class="info-wrapper">
 
                           <br>
                           <?php echo $row['admin_remark']; ?>
                           <hr>
-                          <p class="small-text">Publicado en <?php echo $row['admin_remark_date']; ?></p>
+                          <p class="small-text">Publicado en <?php echo $row['admin_remark_date']; ?> por <?php echo $row['admin_name']; ?></p>
+                       
                         </div>
                         <div class="clearfix"></div>
                       </div>

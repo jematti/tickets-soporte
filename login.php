@@ -2,11 +2,12 @@
 session_start();
 error_reporting(0);
 include("dbconnection.php");
+
 if (isset($_POST['login'])) {
-  $ret = mysqli_query($con, "SELECT * FROM user WHERE email='" . $_POST['email'] . "' and password='" . $_POST['password'] . "'");
+  $ret = mysqli_query($con, "SELECT * FROM user WHERE user_name='" . $_POST['user_name'] . "' and password='" . $_POST['password'] . "'");
   $num = mysqli_fetch_array($ret);
   if ($num > 0) {
-    $_SESSION['login'] = $_POST['email'];
+    $_SESSION['login'] = $_POST['user_name'];
     $_SESSION['id'] = $num['id'];
     $_SESSION['name'] = $num['name'];
     $val3 = date("Y/m/d");
@@ -31,9 +32,8 @@ if (isset($_POST['login'])) {
     echo "<script>window.location.href='" . $extra . "'</script>";
     exit();
   } else {
-    $_SESSION['action1'] = "Usuari@ o Contraseña Inválida";
+    $_SESSION['action1'] = "Usuario o Contraseña Inválida";
     $extra = "login.php";
-
     echo "<script>window.location.href='" . $extra . "'</script>";
     exit();
   }
@@ -57,7 +57,6 @@ if (isset($_POST['login'])) {
   <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
   <link href="assets/css/responsive.css" rel="stylesheet" type="text/css" />
   <link href="assets/css/custom-icon-set.css" rel="stylesheet" type="text/css" />
-
 </head>
 
 <body class="error-body no-top">
@@ -66,17 +65,17 @@ if (isset($_POST['login'])) {
       <div class="col-md-5">
         <h2 class="text-center text-white"><strong>Acceder al Sistema de Tickets</strong></h2>
         <hr style="border-color:#ebe7e7">
-        <p class="text-center">
+        <!-- <p class="text-center">
           Aún no tienes cuenta <a href="registration.php">Regístrate aquí !!</a>
-        </p>
+        </p> -->
       </div>
       <div class="col-md-5 "> <br>
         <p style="color:#F00"><?php echo $_SESSION['action1']; ?><?php echo $_SESSION['action1'] = ""; ?></p>
         <form id="login-form" class="login-form" action="" method="post">
           <p style="color: #F00"><?php echo $_SESSION['action1']; ?><?php echo $_SESSION['action1'] = ""; ?></p>
           <div class="form-group">
-            <label for="email" class="control-label">Correo</label>
-            <input type="text" class="form-control rounded-0" id="email" name="email" required="required">
+            <label for="user_name" class="control-label">Nombre de Usuario</label>
+            <input type="text" class="form-control rounded-0" id="user_name" name="user_name" required="required">
           </div>
           <div class="form-group">
             <label for="password" class="control-label">Contraseña</label>
@@ -87,8 +86,6 @@ if (isset($_POST['login'])) {
           </div>
         </form>
       </div>
-
-
     </div>
   </div>
   <script src="assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>

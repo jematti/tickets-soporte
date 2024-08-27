@@ -3,7 +3,7 @@ session_start();
 error_reporting(0);
 include("dbconnection.php");
 if (isset($_POST['login'])) {
-  $ret = mysqli_query($con, "SELECT * FROM admin WHERE name='" . $_POST['username'] . "' and password='" . $_POST['password'] . "'");
+  $ret = mysqli_query($con, "SELECT * FROM admin WHERE user_name='" . $_POST['username'] . "' and password='" . $_POST['password'] . "'");
   $num = mysqli_fetch_array($ret);
   if ($num > 0) {
     $extra = "home.php";

@@ -81,7 +81,7 @@ check_login();
                   $cnt = 1;
                   while ($row = mysqli_fetch_array($ret)) { ?>
                     <tr>
-                      <td class="v-align-middle"><?php echo $cnt; ?></td>
+                      <td class="v-align-middle"><?php echo $row['id']; ?></td>
                       <td class="v-align-middle"><?php echo $row['name']; ?></td>
                       <td class="v-align-middle"><span class="muted"><?php echo $row['email']; ?></span></td>
                       <td><span class="muted"><?php echo $row['contactno']; ?></span></td>

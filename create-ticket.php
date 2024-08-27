@@ -1,33 +1,29 @@
 <?php
 session_start();
-//echo $_SESSION['id'];
-//$_SESSION['msg'];
 include("dbconnection.php");
 include("checklogin.php");
+date_default_timezone_set('America/La_Paz');
 check_login();
+
 if (isset($_POST['send'])) {
-    $count_my_page = ("hitcounter.txt");
-    $hits = file($count_my_page);
-    $hits[0]++;
-    $fp = fopen($count_my_page, "w");
-    fputs($fp, "$hits[0]");
-    fclose($fp);
-    $tid = $hits[0];
-    $email = $_SESSION['login'];
+    $user_id = $_SESSION['id'];
     $subject = $_POST['subject'];
     $tt = $_POST['tasktype'];
-    $priority = $_POST['priority'];
     $ticket = $_POST['description'];
-    //$ticfile=$_FILES["tfile'"]["name"];
     $st = "Open";
-    $pdate = date('Y-m-d');
-    //move_uploaded_file($_FILES["tfile"]["tmp_name"],"ticketfiles/".$_FILES["tfile"]["name"]);
-    $a = mysqli_query($con, "insert into ticket(ticket_id,email_id,subject,task_type,prioprity,ticket,status,posting_date)  values('$tid','$email','$subject','$tt','$priority','$ticket','$st','$pdate')");
+    $pdate = date('Y-m-d H:i:s'); // Cambia el formato de la fecha y hora
+
+    $a = mysqli_query($con, "INSERT INTO ticket (user_id, subject, task_type, ticket, status, posting_date) VALUES ('$user_id', '$subject', '$tt', '$ticket', '$st', '$pdate')");
     if ($a) {
         echo "<script>alert('Ticket Registrado Correctamente'); location.replace(document.referrer)</script>";
+    } else {
+        echo "<script>alert('Error al registrar el ticket'); location.replace(document.referrer)</script>";
     }
 }
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html>
@@ -101,15 +97,13 @@ if (isset($_POST['send'])) {
                                         <div class="col-md-6 col-xs-12">
                                             <select name="tasktype" class="form-control select" required>
                                                 <option value="">Seleccionar</option>
-                                                <option>Incidente Lógica</option>
-                                                <option>Fallo a Nivel de Servidor</option>
-                                                <option>Error capa de aplicación</option>
-
+                                                <option>Soporte Técnico</option>
+                                                <option>Soporte Técnico Externo(comision)</option>
                                             </select>
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label class="col-md-3 col-xs-12 control-label">Prioridad</label>
                                         <div class="col-md-6 col-xs-12">
                                             <select name="priority" class="form-control select">
@@ -120,40 +114,25 @@ if (isset($_POST['send'])) {
                                                 <option value="Pregunta">Pregunta</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> -->
 
 
                                     <div class="form-group">
                                         <label class="col-md-3 col-xs-12 control-label">Descripción</label>
                                         <div class="col-md-6 col-xs-12">
                                             <textarea name="description" required class="form-control" rows="5"></textarea>
-
                                         </div>
                                     </div>
-
-
                                 </div>
-
-
-
-
-
-
-
-
-
                             </div>
-
                             <div class="panel-footer">
                                 <button class="btn btn-default">Resetear</button>
                                 <input type="submit" value="Enviar" name="send" class="btn btn-primary pull-right">
                             </div>
                     </div>
                     </form>
-
                 </div>
             </div>
-
         </div>
     </div>
     </div>

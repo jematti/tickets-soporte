@@ -49,7 +49,7 @@ include("dbconnection.php");
             <div class="tiles blue added-margin">
               <div class="tiles-body">
                 <div class="controller"> <a href="javascript:;" class="reload"></a> <a href="javascript:;" class="remove"></a> </div>
-                <?php $ret = mysqli_query($con, "select * from ticket where email_id='" . $_SESSION['login'] . "'");
+                <?php $ret = mysqli_query($con, "select * from ticket where user_id='" . $_SESSION['id'] . "'");
                 $num = mysqli_num_rows($ret);
                 ?>
                 <div class="heading"><a href="view-tickets.php" style="color:#FFF"> Total de Tickets</a></div>
@@ -57,7 +57,7 @@ include("dbconnection.php");
               </div>
             </div>
           </div>
-          <div class="col-md-6 col-sm-6 spacing-bottom-sm spacing-bottom">
+          <!-- <div class="col-md-6 col-sm-6 spacing-bottom-sm spacing-bottom">
             <div class="tiles green added-margin">
               <div class="tiles-body">
                 <div class="controller"> <a href="javascript:;" class="reload"></a> <a href="javascript:;" class="remove"></a> </div>
@@ -70,7 +70,7 @@ include("dbconnection.php");
                 <h3 class="text-right text-white"><span class="animate-number" data-value="<?php echo $num; ?>" data-animation-duration="1200"><?= $pnum ?></span></h3>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
 
       </div>

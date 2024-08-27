@@ -3,6 +3,7 @@ session_start();
 error_reporting(0);
 include("dbconnection.php");
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  $user_name = $_POST['user_name'];   
   $name = $_POST['name'];
   $email = $_POST['email'];
   $password = $_POST['password'];
@@ -26,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <meta charset="utf-8" />
-  <title>CWEB Registration</title>
+  <title>SGT-FCBCB</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta content="" name="description" />
   <meta content="" name="author" />
@@ -66,6 +67,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           <div class="form-group">
             <label for="name" class="control-label">Nombre</label>
             <input type="text" class="form-control rounded-0" id="name" name="name" required="required">
+          </div>
+          <div class="form-group">
+            <label for="user_name" class="control-label">Nombre de Usuario</label>
+            <input type="text" class="form-control rounded-0" id="user_name" name="user_name" required="required">
           </div>
           <div class="form-group">
             <label for="email" class="control-label">Correo</label>

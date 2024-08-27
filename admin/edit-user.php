@@ -3,14 +3,29 @@ session_start();
 include("checklogin.php");
 check_login();
 include("dbconnection.php");
+
 if (isset($_POST['update'])) {
   $name = $_POST['name'];
-  $altemail = $_POST['altemail'];
-  $contact = $_POST['contact'];
+  $user_name = $_POST['user_name'];
+  $altemail = isset($_POST['alt_email']) ? $_POST['alt_email'] : '';
+  $contact = isset($_POST['mobile']) ? $_POST['mobile'] : '';
   $address = $_POST['address'];
   $gender = $_POST['gender'];
   $userid = $_GET['id'];
-  $ret = mysqli_query($con, "update user set name='$name', alt_email='$altemail',mobile='$contact',gender='$gender',address='$address' where id='$userid'");
+
+  $update_query = "UPDATE user SET name='$name', user_name='$user_name', gender='$gender', address='$address'";
+
+  if (!empty($altemail)) {
+    $update_query .= ", alt_email='$altemail'";
+  }
+
+  if (!empty($contact)) {
+    $update_query .= ", mobile='$contact'";
+  }
+
+  $update_query .= " WHERE id='$userid'";
+
+  $ret = mysqli_query($con, $update_query);
   if ($ret) {
     echo "<script>alert('Data Updated'); location.replace(document.referrer)</script>";
   }
@@ -23,7 +38,7 @@ if (isset($_POST['update'])) {
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <meta charset="utf-8" />
-  <title>CWEB Edit Profile </title>
+  <title>SGT-FCBCB</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta content="" name="description" />
   <meta content="" name="author" />
@@ -57,9 +72,10 @@ if (isset($_POST['update'])) {
     <div class="clearfix"></div>
     <div class="content">
       <div class="page-title">
-        <?php $rt = mysqli_query($con, "select * from user where id='" . $_GET['id'] . "'");
+        <?php 
+        $rt = mysqli_query($con, "SELECT * FROM user WHERE id='" . $_GET['id'] . "'");
         while ($rw = mysqli_fetch_array($rt)) { ?>
-          <h3>Update<?php echo $rw['name']; ?>'s Profile</h3>
+          <h3>Update <?php echo $rw['name']; ?>'s Profile</h3>
 
           <form name="muser" method="post" action="" enctype="multipart/form-data">
             <div class="row justify-content-center">
@@ -69,16 +85,20 @@ if (isset($_POST['update'])) {
                   <input type="text" class="form-control rounded-0" id="name" name="name" value="<?php echo $rw['name']; ?>" required="required">
                 </div>
                 <div class="form-group">
+                  <label for="user_name" class="control-label">Username</label>
+                  <input type="text" class="form-control rounded-0" id="user_name" name="user_name" value="<?php echo $rw['user_name']; ?>" required="required">
+                </div>
+                <div class="form-group">
                   <label for="email" class="control-label">Main Email</label>
                   <input type="email" class="form-control rounded-0" id="email" name="email" value="<?php echo $rw['email']; ?>" required="required">
                 </div>
                 <div class="form-group">
                   <label for="alt_email" class="control-label">Alternative Email</label>
-                  <input type="email" class="form-control rounded-0" id="alt_email" name="alt_email" value="<?php echo $rw['alt_email']; ?>" required="required">
+                  <input type="email" class="form-control rounded-0" id="alt_email" name="alt_email" value="<?php echo $rw['alt_email']; ?>">
                 </div>
                 <div class="form-group">
                   <label for="mobile" class="control-label">Contact Number</label>
-                  <input type="text" class="form-control rounded-0" id="mobile" name="mobile" value="<?php echo $rw['mobile']; ?>" required="required">
+                  <input type="text" class="form-control rounded-0" id="mobile" name="mobile" value="<?php echo $rw['mobile']; ?>">
                 </div>
                 <div class="form-group">
                   <label for="gender" class="control-label">Gender</label>
