@@ -18,13 +18,13 @@
      <p class="menu-title">Opciones <span class="pull-right"><a href="javascript:;"><i class="fa fa-refresh"></i></a></span></p>
 
      <ul>
-       <li class="start"> <a href="dashboard.php"> <i class="icon-custom-home"></i> <span class="title">Dashboard</span> <span class="selected"></span> </a>
+       <li class="start"> <a href="dashboard.php"> <i class="icon-custom-home"></i> <span class="title">Panel de Control</span> <span class="selected"></span> </a>
        </li>
 
        <!-- <li><a href="get-quote.php"> <span class="fa fa-tasks"></span> Solicitar un Servicio</a></li> -->
        <li><a href="create-ticket.php"><span class="fa fa-ticket"></span> Crear Ticket</a></li>
        <li><a href="view-tickets.php"><span class="fa fa-ticket"></span> Ver Tickets</a></li>
-       <li><a href="profile.php"><span class="fa fa-user"></span> Perfil</a></li>
-       <li><a href="change-password.php"><span class="fa fa-file-text-o"></span> Cambiar Contraseña</a></li>
+       <!-- <li><a href="profile.php"><span class="fa fa-user"></span> Perfil</a></li>
+       <li><a href="change-password.php"><span class="fa fa-file-text-o"></span> Cambiar Contraseña</a></li> -->
 
      </ul>

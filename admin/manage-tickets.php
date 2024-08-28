@@ -1,17 +1,18 @@
 <?php
 session_start();
-//echo $_SESSION['id'];
-//$_SESSION['msg'];
 include("dbconnection.php");
 include("checklogin.php");
 check_login();
+
 if (isset($_POST['update'])) {
   $adminremark = $_POST['aremark'];
   $fid = $_POST['frm_id'];
   $admin_id = $_SESSION['id'];
-  mysqli_query($con, "update ticket set admin_remark='$adminremark', admin_id='$admin_id' ,status='closed' where id='$fid'");
-  echo '<script>alert("Ticket ha sido actualizado, correctamente"); location.replace(document.referrer)</script>';
+
+  mysqli_query($con, "UPDATE ticket SET admin_remark='$adminremark', admin_id='$admin_id', status='closed' WHERE id='$fid'");
+  echo '<script>alert("Ticket ha sido actualizado correctamente."); location.replace(document.referrer)</script>';
 }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -65,90 +66,94 @@ if (isset($_POST['update'])) {
       </div>
       <div class="clearfix"></div>
       <?php 
-    $rt = mysqli_query($con, "SELECT ticket.*, user.name AS username FROM ticket INNER JOIN user ON ticket.user_id = user.id ORDER BY ticket.id DESC");
-    while ($row = mysqli_fetch_array($rt)) {
-    ?>
-    <div class="row">
+        // Modificación en la consulta para obtener el nombre del administrador
+        $rt = mysqli_query($con, "SELECT ticket.*, user.name AS username, admin.name AS adminname FROM ticket 
+                                  INNER JOIN user ON ticket.user_id = user.id 
+                                  LEFT JOIN admin ON ticket.admin_id = admin.id 
+                                  ORDER BY ticket.id DESC");
+
+        while ($row = mysqli_fetch_array($rt)) {
+      ?>
+      <div class="row">
         <div class="col-md-12">
-            <div class="grid simple no-border">
-                <div class="grid-title no-border descriptive clickable">
-                    <h4 class="semi-bold"><?php echo $row['subject']; ?></h4>
-                    <p>
-                        <span class="text-success bold">Ticket #<?php echo $row['id']; ?> - <?php echo $row['username']; ?></span>
-                        - Fecha de creación <?php echo $row['posting_date']; ?>
-                        <?php
-                        // Obtener el valor de $row['status']
-                        $status = $row['status'];
-                        
-                        // Definir los colores según el estado
-                        $color = '';
-                        switch ($status) {
-                            case 'Open':
-                                $color = 'green'; // Cambia esto al color que desees
-                                break;
-                            case 'closed':
-                                $color = 'red'; // Cambia esto al color que desees
-                                break;
-                            case 'rechazado':
-                                $color = 'red'; // Cambia esto al color que desees
-                                break;
-                            default:
-                                // Si no coincide con ninguno, se usa un color predeterminado
-                                $color = 'black'; // Cambia esto al color que desees
-                                break;
-                        }
-                        ?>
-                        <span class="label label-important" style="background-color: <?php echo $color; ?>"><?php echo $status; ?></span>
-                    </p>
-                    <div class="actions"> <a class="view" href="javascript:;"><i class="fa fa-angle-down"></i></a> </div>
+          <div class="grid simple no-border">
+            <div class="grid-title no-border descriptive clickable">
+              <h4 class="semi-bold"><?php echo $row['subject']; ?></h4>
+              <p>
+                <span class="text-success bold">Ticket #<?php echo $row['id']; ?> - <?php echo $row['username']; ?></span>
+                - Fecha de creación <?php echo $row['posting_date']; ?>
+                <?php
+                  // Obtener el valor de $row['status']
+                  $status = $row['status'];
+                  
+                  // Definir los colores según el estado
+                  $color = '';
+                  switch ($status) {
+                      case 'Open':
+                          $color = 'green'; // Cambia esto al color que desees
+                          break;
+                      case 'closed':
+                          $color = 'red'; // Cambia esto al color que desees
+                          break;
+                      case 'rechazado':
+                          $color = 'red'; // Cambia esto al color que desees
+                          break;
+                      default:
+                          // Si no coincide con ninguno, se usa un color predeterminado
+                          $color = 'black'; // Cambia esto al color que desees
+                          break;
+                  }
+                ?>
+                <span class="label label-important" style="background-color: <?php echo $color; ?>"><?php echo $status; ?></span>
+              </p>
+              <div class="actions"> <a class="view" href="javascript:;"><i class="fa fa-angle-down"></i></a> </div>
+            </div>
+            <div class="grid-body no-border" style="display:none">
+              <div class="post">
+                <div class="user-profile-pic-wrapper">
+                  <div class="user-profile-pic-normal"> 
+                    <img width="35" height="35" data-src-retina="../assets/img/user.png" data-src="../assets/img/user.png" src="../assets/img/user.png" alt=""> 
+                  </div>
                 </div>
-                <div class="grid-body no-border" style="display:none">
-                    <div class="post">
-                        <div class="user-profile-pic-wrapper">
-                            <div class="user-profile-pic-normal"> <img width="35" height="35" data-src-retina="../assets/img/user.png" data-src="../assets/img/user.png" src="../assets/img/user.png" alt=""> </div>
-                        </div>
-                        <div class="info-wrapper">
-                            <div class="info"><?php echo $row['ticket']; ?> </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="clearfix"></div>
+                <div class="info-wrapper">
+                  <div class="info"><?php echo $row['ticket']; ?> </div>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <br>
+              <div class="form-actions">
+                <div class="post col-md-12">
+                  <div class="user-profile-pic-wrapper">
+                    <div class="user-profile-pic-normal"> 
+                      <img width="35" height="35" data-src-retina="../assets/img/admin3.jpeg" data-src="../assets/img/admin3.jpeg" src="../assets/img/admin3.jpg" alt=""> 
                     </div>
+                  </div>
+                  <div class="info-wrapper">
+                    <form name="adminr" method="post" enctype="multipart/form-data">
+                      <br>
+                      <textarea name="aremark" cols="50" rows="4" required="true"><?php echo $row['admin_remark']; ?></textarea>
+                      <hr>
+                      <p class="small-text">
+                        <input name="update" type="submit" class="txtbox1" id="Update" value="Actualizar" size="40" />
+                        <input name="frm_id" type="hidden" id="frm_id" value="<?php echo $row['id']; ?>" />
+                      </p>
+                    </form>
                     <br>
-                    <div class="form-actions">
-                        <div class="post col-md-12">
-                            <div class="user-profile-pic-wrapper">
-                                <div class="user-profile-pic-normal"> <img width="35" height="35" data-src-retina="../assets/img/admin3.jpeg" data-src="../assets/img/admin3.jpeg" src="../assets/img/admin3.jpg" alt=""> </div>
-                            </div>
-                            <div class="info-wrapper">
-                                <form name="adminr" method="post" enctype="multipart/form-data">
-                                    <br>
-                                    <textarea name="aremark" cols="50" rows="4" required="true"><?php echo $row['admin_remark']; ?></textarea>
-                                    <hr>
-                                    <p class="small-text">
-                                        <input name="update" type="submit" class="txtbox1" id="Update" value="Actualizar" size="40" />
-                                        <input name="frm_id" type="hidden" id="frm_id" value="<?php echo $row['id']; ?>" />
-                                    </p>
-                                </form>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
+                    <?php if(!empty($row['adminname'])) { ?>
+                      <p class="small-text text-muted">Atendido por: <strong><?php echo $row['adminname']; ?></strong></p>
+                    <?php } ?>
+                  </div>
+                  <div class="clearfix"></div>
                 </div>
+                <div class="clearfix"></div>
+              </div>
             </div>
           </div>
         </div>
-        <?php } ?>
-          </div>
-        </div>
-
-
+      </div>
+      <?php } ?>
     </div>
-  </div>
-  </div>
-
-
-  </div>
   </div>
   </div>
 

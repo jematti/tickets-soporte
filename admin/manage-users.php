@@ -3,6 +3,25 @@ session_start();
 include("dbconnection.php");
 include("checklogin.php");
 check_login();
+
+// Lógica para agregar un nuevo usuario
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_user'])) {
+    $user_name = $_POST['user_name'];
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $mobile = $_POST['phone'];
+    $gender = $_POST['gender'];
+
+    // Insertar el nuevo usuario en la base de datos
+    $insert_query = "INSERT INTO user (user_name, name, email, password, mobile, gender) VALUES ('$user_name', '$name', '$email', '$password', '$mobile', '$gender')";
+    if (mysqli_query($con, $insert_query)) {
+        echo "<script>alert('Usuario agregado exitosamente');</script>";
+        echo "<script>window.location.href='manage-users.php'</script>";
+    } else {
+        echo "<script>alert('Ocurrió un error. Por favor, intente nuevamente.');</script>";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -52,14 +71,20 @@ check_login();
                     <p>Inicio</p>
                 </li>
                 <li><a href="#" class="active">Gestionar Usuarios</a>
-
                 </li>
             </ul>
-            <div class="page-title">
-                <i class="fa fa-users"></i>
-
-                <h3>Gestionar Usuarios </h3>
+        
+            <div class="page-title" style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center;">
+                    <i class="fa fa-users" style="font-size: 24px; margin-right: 10px;"></i>
+                    <h3 style="margin: 0;">Gestionar Usuarios</h3>
+                </div>
+                <button class="btn btn-success btn-xs rounded-0" data-toggle="modal" data-target="#addUserModal" style="display: flex; align-items: center; padding: 6px 12px;">
+                    <i class="fa fa-plus" style="color: #fff; margin-right: 8px;"></i> 
+                    <span style="color: #fff; font-weight: 500;">Agregar Usuario</span>
+                </button>
             </div>
+
 
             <div class="row">
                 <div class="col-md-12">
@@ -78,8 +103,8 @@ check_login();
                                             <tr>
                                                 <th>#</th>
                                                 <th>Nombre Completo</th>
+                                                <th>UserName</th>
                                                 <th>Correo</th>
-                                                <th># Contacto</th>
                                                 <th>Fecha de Registro</th>
                                                 <th>Acción</th>
                                             </tr>
@@ -93,8 +118,8 @@ check_login();
                                                 <tr>
                                                     <td><?php echo $cnt; ?></td>
                                                     <td><?php echo $row['name']; ?></td>
+                                                    <td><?php echo $row['user_name']; ?></td>
                                                     <td><?php echo $row['email']; ?></td>
-                                                    <td><?php echo $row['mobile']; ?></td>
                                                     <td><?php echo $row['posting_date']; ?></td>
                                                     <td>
                                                         <form name="abc" action="" method="post">
@@ -115,10 +140,59 @@ check_login();
                 </div>
 
             </div>
+        </div>        
+    </div>
+
+    <!-- Modal para agregar un nuevo usuario -->
+    <div id="addUserModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Contenido del modal -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" style="text-align: center; font-weight: bold;">Agregar Usuario</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="">
+                    <div class="form-group">
+                        <label for="name">Nombre</label>
+                        <input type="text" class="form-control rounded-0" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="user_name">Nombre de Usuario</label>
+                        <input type="text" class="form-control rounded-0" id="user_name" name="user_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo (Opcional)</label>
+                        <input type="email" class="form-control rounded-0" id="email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input type="password" class="form-control rounded-0" id="password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Número de Contacto (Opcional)</label>
+                        <input type="text" class="form-control rounded-0" id="phone" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Género</label>
+                        <select class="form-control rounded-0" id="gender" name="gender" required>
+                            <option value="male">Masculino</option>
+                            <option value="female">Femenino</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer" style="justify-content: flex-end;">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" name="add_user" class="btn btn-success">Guardar</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
+</div>
+
     <!-- END PAGE -->
-    </div>
+    
 
     </div>
     <!-- END CONTAINER -->
