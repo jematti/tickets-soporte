@@ -7,13 +7,14 @@ check_login();
 
 if (isset($_POST['send'])) {
     $user_id = $_SESSION['id'];
+    $repository_id = $_POST['repository']; // Obtener el repositorio seleccionado
     $subject = $_POST['subject'];
     $tt = $_POST['tasktype'];
     $ticket = $_POST['description'];
     $st = "Open";
-    $pdate = date('Y-m-d H:i:s'); // Cambia el formato de la fecha y hora
+    $pdate = date('Y-m-d H:i:s'); // Formato de fecha y hora
 
-    $a = mysqli_query($con, "INSERT INTO ticket (user_id, subject, task_type, ticket, status, posting_date) VALUES ('$user_id', '$subject', '$tt', '$ticket', '$st', '$pdate')");
+    $a = mysqli_query($con, "INSERT INTO ticket (user_id, repository_id, subject, task_type, ticket, status, posting_date) VALUES ('$user_id', '$repository_id', '$subject', '$tt', '$ticket', '$st', '$pdate')");
     if ($a) {
         echo "<script>alert('Ticket Registrado Correctamente'); location.replace(document.referrer)</script>";
     } else {
@@ -21,9 +22,6 @@ if (isset($_POST['send'])) {
     }
 }
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html>
@@ -58,24 +56,14 @@ if (isset($_POST['send'])) {
     <!-- END SIDEBAR -->
     <!-- BEGIN PAGE CONTAINER-->
     <div class="page-content">
-        <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
-        <div id="portlet-config" class="modal hide">
-            <div class="modal-header">
-                <button data-dismiss="modal" class="close" type="button"></button>
-                <h3>Widget Settings</h3>
-            </div>
-            <div class="modal-body"> Widget settings form goes here </div>
-        </div>
         <div class="clearfix"></div>
         <div class="content">
             <div class="page-title">
                 <h3>Crear ticket</h3>
                 <div class="row">
                     <div class="col-md-12">
-
                         <form class="form-horizontal" name="form1" method="post" action="" onSubmit="return valid();">
                             <div class="panel panel-default">
-
                                 <div class="panel-body bg-white">
                                     <?php if (isset($_SESSION['msg1'])) : ?>
                                         <p align="center" style="color:#FF0000"><?= $_SESSION['msg1']; ?><?= $_SESSION['msg1'] = ""; ?></p>
@@ -87,10 +75,8 @@ if (isset($_POST['send'])) {
                                                 <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
                                                 <input type="text" name="subject" id="subject" value="" required class="form-control" />
                                             </div>
-
                                         </div>
                                     </div>
-
 
                                     <div class="form-group">
                                         <label class="col-md-3 col-xs-12 control-label">Tipo de Tarea</label>
@@ -103,19 +89,20 @@ if (isset($_POST['send'])) {
                                         </div>
                                     </div>
 
-                                    <!-- <div class="form-group">
-                                        <label class="col-md-3 col-xs-12 control-label">Prioridad</label>
+                                    <div class="form-group">
+                                        <label class="col-md-3 col-xs-12 control-label">Repositorio</label>
                                         <div class="col-md-6 col-xs-12">
-                                            <select name="priority" class="form-control select">
-                                                <option value="">Seleccionar</option>
-                                                <option value="Importante">Importante</option>
-                                                <option value="Urgente-(Problema Funcional)">Urgente (Problema Funcional)</option>
-                                                <option value="No-Urgente">No Urgente</option>
-                                                <option value="Pregunta">Pregunta</option>
+                                            <select name="repository" class="form-control select" required>
+                                                <option value="">Seleccionar Repositorio</option>
+                                                <?php
+                                                $repos = mysqli_query($con, "SELECT * FROM repository");
+                                                while ($repo = mysqli_fetch_assoc($repos)) {
+                                                    echo "<option value='" . $repo['id'] . "'>" . $repo['name'] . "</option>";
+                                                }
+                                                ?>
                                             </select>
                                         </div>
-                                    </div> -->
-
+                                    </div>
 
                                     <div class="form-group">
                                         <label class="col-md-3 col-xs-12 control-label">Descripción</label>
@@ -137,7 +124,6 @@ if (isset($_POST['send'])) {
     </div>
     </div>
 
-    </div>
     <script src="assets/plugins/jquery-1.8.3.min.js" type="text/javascript"></script>
     <script src="assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
     <script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>

@@ -12,7 +12,6 @@ if (isset($_POST['update'])) {
   mysqli_query($con, "UPDATE ticket SET admin_remark='$adminremark', admin_id='$admin_id', status='closed' WHERE id='$fid'");
   echo '<script>alert("Ticket ha sido actualizado correctamente."); location.replace(document.referrer)</script>';
 }
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -66,10 +65,12 @@ if (isset($_POST['update'])) {
       </div>
       <div class="clearfix"></div>
       <?php 
-        // Modificación en la consulta para obtener el nombre del administrador
-        $rt = mysqli_query($con, "SELECT ticket.*, user.name AS username, admin.name AS adminname FROM ticket 
+        // Modificación en la consulta para obtener el nombre del repositorio y el administrador
+        $rt = mysqli_query($con, "SELECT ticket.*, user.name AS username, admin.name AS adminname, repository.name AS repositoryname 
+                                  FROM ticket 
                                   INNER JOIN user ON ticket.user_id = user.id 
                                   LEFT JOIN admin ON ticket.admin_id = admin.id 
+                                  LEFT JOIN repository ON ticket.repository_id = repository.id
                                   ORDER BY ticket.id DESC");
 
         while ($row = mysqli_fetch_array($rt)) {
@@ -80,29 +81,11 @@ if (isset($_POST['update'])) {
             <div class="grid-title no-border descriptive clickable">
               <h4 class="semi-bold"><?php echo $row['subject']; ?></h4>
               <p>
-                <span class="text-success bold">Ticket #<?php echo $row['id']; ?> - <?php echo $row['username']; ?></span>
+                <span class="text-success bold">Ticket #<?php echo $row['id']; ?> - <?php echo $row['username']; ?> (<?php echo $row['repositoryname']; ?>)</span>
                 - Fecha de creación <?php echo $row['posting_date']; ?>
                 <?php
-                  // Obtener el valor de $row['status']
                   $status = $row['status'];
-                  
-                  // Definir los colores según el estado
-                  $color = '';
-                  switch ($status) {
-                      case 'Open':
-                          $color = 'green'; // Cambia esto al color que desees
-                          break;
-                      case 'closed':
-                          $color = 'red'; // Cambia esto al color que desees
-                          break;
-                      case 'rechazado':
-                          $color = 'red'; // Cambia esto al color que desees
-                          break;
-                      default:
-                          // Si no coincide con ninguno, se usa un color predeterminado
-                          $color = 'black'; // Cambia esto al color que desees
-                          break;
-                  }
+                  $color = ($status == 'Open') ? 'green' : (($status == 'closed' || $status == 'rechazado') ? 'red' : 'black');
                 ?>
                 <span class="label label-important" style="background-color: <?php echo $color; ?>"><?php echo $status; ?></span>
               </p>

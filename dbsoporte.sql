@@ -365,3 +365,33 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+CREATE TABLE `repository` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+INSERT INTO `repository` (`name`, `description`) VALUES
+('Fundación Cultural del Banco Central de Bolivia', 'Repositorio para la Fundación Cultural del Banco Central de Bolivia'),
+('Archivo y Bibliotecas Nacionales de Bolivia', 'Repositorio para Archivo y Bibliotecas Nacionales de Bolivia'),
+('Casa de la Libertad', 'Repositorio para Casa de la Libertad'),
+('Casa de la Moneda', 'Repositorio para Casa de la Moneda'),
+('Museo Nacional de Etnografía y Folklore (La Paz)', 'Repositorio para el Museo Nacional de Etnografía y Folklore en La Paz'),
+('Museo Nacional de Arte', 'Repositorio para el Museo Nacional de Arte'),
+('Centro de la Cultura Plurinacional', 'Repositorio para el Centro de la Cultura Plurinacional'),
+('Centro de la Revolución Cultural', 'Repositorio para el Centro de la Revolución Cultural'),
+('Casa Museo Marina Nuñez del Prado', 'Repositorio para la Casa Museo Marina Nuñez del Prado');
+
+
+ALTER TABLE `user` ADD COLUMN `repository_id` int(11) DEFAULT NULL;
+ALTER TABLE `admin` ADD COLUMN `repository_id` int(11) DEFAULT NULL;
+ALTER TABLE `ticket` ADD COLUMN `repository_id` int(11) DEFAULT NULL;
+
+-- Agregar las claves foráneas (opcional, para mantener la integridad referencial)
+ALTER TABLE `user` ADD CONSTRAINT `fk_user_repository` FOREIGN KEY (`repository_id`) REFERENCES `repository`(`id`);
+ALTER TABLE `admin` ADD CONSTRAINT `fk_admin_repository` FOREIGN KEY (`repository_id`) REFERENCES `repository`(`id`);
+ALTER TABLE `ticket` ADD CONSTRAINT `fk_ticket_repository` FOREIGN KEY (`repository_id`) REFERENCES `repository`(`id`);
