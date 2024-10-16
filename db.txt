@@ -1,0 +1,207 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 10-05-2023 a las 05:03:43
+-- Versión del servidor: 10.4.24-MariaDB
+-- Versión de PHP: 8.1.6
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `crm-gestion`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `admin`
+--
+
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(255) NOT NULL DEFAULT '',
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `password` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+
+--
+-- Volcado de datos para la tabla `admin`
+--
+
+INSERT INTO `admin` (`id`,`user_name`, `name`, `password`) VALUES
+(1, 'admin1', 'Javier Matti', '123456'),
+(2, 'admin2', 'Luis Fernandez','123456');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `prequest`
+--
+
+DROP TABLE IF EXISTS `prequest`;
+CREATE TABLE `prequest` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `contactno` varchar(11) DEFAULT NULL,
+  `company` varchar(255) DEFAULT NULL,
+  `services` text DEFAULT NULL,
+  `others` varchar(255) DEFAULT NULL,
+  `query` longtext DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 0,
+  `posting_date` date DEFAULT NULL,
+  `remark` longtext DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=5;
+
+--
+-- Estructura de tabla para la tabla `ticket`
+--
+
+DROP TABLE IF EXISTS `ticket`;
+CREATE TABLE `ticket` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(300) DEFAULT NULL,
+  `subject` varchar(300) DEFAULT NULL,
+  `task_type` varchar(300) DEFAULT NULL,
+  `ticket` longtext DEFAULT NULL,
+  `attachment` varchar(300) DEFAULT NULL,
+  `status` varchar(300) DEFAULT NULL,
+  `admin_remark` longtext DEFAULT NULL,
+  `posting_date` timestamp NULL DEFAULT current_timestamp(),
+  `admin_remark_date` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `admin_id` varchar(300) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=18;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `alt_email` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `mobile` varchar(255) DEFAULT NULL,
+  `gender` varchar(255) DEFAULT NULL,
+  `address` varchar(500) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `posting_date` timestamp NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+
+--
+-- Volcado de datos para la tabla `user`
+--
+
+INSERT INTO `user` (`id`, `user_name`, `name`, `email`, `alt_email`, `password`, `mobile`, `gender`, `address`, `status`, `posting_date`) VALUES
+(1, 'testusername', 'testuser', 'testuser@example.com', 'altuser@example.com', '123456', '1234567890', 'male', '123 Test St', 1, '2024-07-15 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usercheck`
+--
+
+DROP TABLE IF EXISTS `usercheck`;
+CREATE TABLE `usercheck` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `logindate` varchar(255) DEFAULT '',
+  `logintime` varchar(255) DEFAULT '',
+  `user_id` int(11) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT '',
+  `ip` varbinary(16) DEFAULT NULL,
+  `mac` varbinary(16) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=12;
+
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+
+-- Inserción de usuarios en la tabla `user`
+INSERT INTO `user` (`name`, `user_name`, `gender`, `password`, `email`, `alt_email`, `mobile`, `address`, `status`, `posting_date`)
+VALUES
+('Adrian Villarreal', '6799225', 'Masculino', '6799225', 'adrian.villarreal@example.com', 'alt_adrian.villarreal@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Adriana Sandalio Viscarra', '4796382', 'Femenino', '4796382', 'adriana.sandalio@example.com', 'alt_adriana.sandalio@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Ángela Aduviri Arroyo', '4922527', 'Femenino', '4922527', 'angela.aduviri@example.com', 'alt_angela.aduviri@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Beatriz Lidia Mamani Abelo', '4329603', 'Femenino', '4329603', 'beatriz.mamani@example.com', 'alt_beatriz.mamani@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Carola Gutierrez Soto', '3407802', 'Femenino', '3407802', 'carola.gutierrez@example.com', 'alt_carola.gutierrez@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Cristobal Apaza Bautista', '2682167', 'Masculino', '2682167', 'cristobal.apaza@example.com', 'alt_cristobal.apaza@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Daniel Aramayo Villarroel', '6736666', 'Masculino', '6736666', 'daniel.aramayo@example.com', 'alt_daniel.aramayo@example.com', '1234567890', 'Default Address', 1, NOW()),
+('David Aruquipa Pérez', '3358957', 'Masculino', '3358957', 'david.aruquipa@example.com', 'alt_david.aruquipa@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Denisse Velásquez Silva', '6190120', 'Femenino', '6190120', 'denisse.velasquez@example.com', 'alt_denisse.velasquez@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Elian Álvarez Gómez', '6985867', 'Femenino', '6985867', 'elian.alvarez@example.com', 'alt_elian.alvarez@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Erika Gómez', '3423767', 'Femenino', '3423767', 'erika.gomez@example.com', 'alt_erika.gomez@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Estefani Huiza Fernández', '7050731', 'Femenino', '7050731', 'estefani.huiza@example.com', 'alt_estefani.huiza@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Estela Ojeda Loza', '3325512', 'Femenino', '3325512', 'estela.ojeda@example.com', 'alt_estela.ojeda@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Eustaquio Vera Copa', '2689803', 'Masculino', '2689803', 'eustaquio.vera@example.com', 'alt_eustaquio.vera@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Evelin Troche Espinoza', '6123695', 'Femenino', '6123695', 'evelin.troche@example.com', 'alt_evelin.troche@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Franco Villatarco Zambrana', '6876773', 'Masculino', '6876773', 'franco.villatarco@example.com', 'alt_franco.villatarco@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Gabriela Fuentes Ramos', '7008958', 'Femenino', '7008958', 'gabriela.fuentes@example.com', 'alt_gabriela.fuentes@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Grover Choque Quispe', '2543742', 'Masculino', '2543742', 'grover.choque@example.com', 'alt_grover.choque@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Guadalupe Chávez Choque', '5480490', 'Femenino', '5480490', 'guadalupe.chavez@example.com', 'alt_guadalupe.chavez@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Hector Sempertegui Alvarez', '3462509', 'Masculino', '3462509', 'hector.sempertegui@example.com', 'alt_hector.sempertegui@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Hernan Sandro Aquino Churqui', '4898121', 'Masculino', '4898121', 'hernan.aquino@example.com', 'alt_hernan.aquino@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Janela Ingrid Vargas Vasquez', '5989585', 'Femenino', '5989585', 'janela.vargas@example.com', 'alt_janela.vargas@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Javier Matti Zapana', '8324905', 'Masculino', '8324905', 'javier.matti@example.com', 'alt_javier.matti@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Juan Ramos', '3487543', 'Masculino', '3487543', 'juan.ramos@example.com', 'alt_juan.ramos@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Karina Saravia Flores', '9209737', 'Femenino', '9209737', 'karina.saravia@example.com', 'alt_karina.saravia@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Katerine Isidro Queso', '9070081', 'Femenino', '9070081', 'katerine.isidro@example.com', 'alt_katerine.isidro@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Livia Armendia Laurel', '6080890', 'Femenino', '6080890', 'livia.armendia@example.com', 'alt_livia.armendia@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Luis Alberto Fernandez Orellana', '5762453', 'Masculino', '5762453', 'luis.fernandez@example.com', 'alt_luis.fernandez@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Luis Arequipa Apaza', '4791448', 'Masculino', '4791448', 'luis.arequipa@example.com', 'alt_luis.arequipa@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Luis Daniel Amezaga Bejarano', '4909891', 'Masculino', '4909891', 'luis.amezaga@example.com', 'alt_luis.amezaga@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Luis Oporto Ordonez', '2220126', 'Masculino', '2220126', 'luis.oporto@example.com', 'alt_luis.oporto@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Mabel Belzu García', '4741713', 'Femenino', '4741713', 'mabel.belzu@example.com', 'alt_mabel.belzu@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Magali Macias Bohorquez', '2630284', 'Femenino', '2630284', 'magali.macias@example.com', 'alt_magali.macias@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Magali Uribe García', '5078422', 'Femenino', '5078422', 'magali.uribe@example.com', 'alt_magali.uribe@example.com', '1234567890', 'Default Address', 1, NOW()),
+('María Alejandra Cornejo Valdez', '6185880', 'Femenino', '6185880', 'maria.cornejo@example.com', 'alt_maria.cornejo@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Maria Delina Carvajal Duran', '6081183', 'Femenino', '6081183', 'maria.carvajal@example.com', 'alt_maria.carvajal@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Maria Guadalupe Quintanilla Quelca', '4376835', 'Femenino', '4376835', 'maria.quintanilla@example.com', 'alt_maria.quintanilla@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Mariana Vargas Toro', '3375385', 'Femenino', '3375385', 'mariana.vargas@example.com', 'alt_mariana.vargas@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Marianela Espana Mita', '5974311', 'Femenino', '5974311', 'marianela.espana@example.com', 'alt_marianela.espana@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Mario Marca Honorio', '4844721', 'Masculino', '4844721', 'mario.marca@example.com', 'alt_mario.marca@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Marisabel Zubieta Salas', '3484596', 'Femenino', '3484596', 'marisabel.zubieta@example.com', 'alt_marisabel.zubieta@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Mary Carmen Molina Ergueta', '4878229', 'Femenino', '4878229', 'mary.molina@example.com', 'alt_mary.molina@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Mauricio Fernando Castillo Arratia', '6144712', 'Masculino', '6144712', 'mauricio.castillo@example.com', 'alt_mauricio.castillo@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Melina Maribel Maldonado Rios', '6783260', 'Femenino', '6783260', 'melina.maldonado@example.com', 'alt_melina.maldonado@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Pablo Ernesto Mansilla Salinas', '2150176', 'Masculino', '2150176', 'pablo.mansilla@example.com', 'alt_pablo.mansilla@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Patricia Humana Lluta', '8412357', 'Femenino', '8412357', 'patricia.humana@example.com', 'alt_patricia.humana@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Pavel Pérez Armata', '3336972', 'Masculino', '3336972', 'pavel.perez@example.com', 'alt_pavel.perez@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Ramiro Marquez Gallardo', '4262272', 'Masculino', '4262272', 'ramiro.marquez@example.com', 'alt_ramiro.marquez@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Reyna Roque Ortega', '4842254', 'Femenino', '4842254', 'reyna.roque@example.com', 'alt_reyna.roque@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Ricardo Aguilar Asin', '2058080', 'Masculino', '2058080', 'ricardo.aguilar@example.com', 'alt_ricardo.aguilar@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Rita Lizeth Quiroz Suarez', '4918718', 'Femenino', '4918718', 'rita.quiroz@example.com', 'alt_rita.quiroz@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Rolando Paniagua Espinoza', '3251519', 'Masculino', '3251519', 'rolando.paniagua@example.com', 'alt_rolando.paniagua@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Rolando Pereira Gamez', '3388610', 'Masculino', '3388610', 'rolando.pereira@example.com', 'alt_rolando.pereira@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Rosa Adelaida Quispe Calle', '8264230', 'Femenino', '8264230', 'rosa.quispe@example.com', 'alt_rosa.quispe@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Silvia Condori Mamani', '6965732', 'Femenino', '6965732', 'silvia.condori@example.com', 'alt_silvia.condori@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Silvia Huanca Calle', '4985716', 'Femenino', '4985716', 'silvia.huanca@example.com', 'alt_silvia.huanca@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Willy Quispe Lipa', '3431083', 'Masculino', '3431083', 'willy.quispe@example.com', 'alt_willy.quispe@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Yecid Gustavo Sanchez Velasco', '4831236', 'Masculino', '4831236', 'yecid.sanchez@example.com', 'alt_yecid.sanchez@example.com', '1234567890', 'Default Address', 1, NOW()),
+('Yussela Saleth Goyzueta Ramos', '4848702', 'Femenino', '4848702', 'yussela.goyzueta@example.com', 'alt_yussela.goyzueta@example.com', '1234567890', 'Default Address', 1, NOW());
